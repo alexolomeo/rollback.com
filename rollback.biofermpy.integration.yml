@@ -1,0 +1,16 @@
+---
+
+- name: bioofermpy integration rollback
+  hosts: gazellacom
+  become: true
+  vars:
+     gazellacom_number_build: "{{ lookup('file', gazellacom_build_sequence_file) }}"
+  roles:
+    - role: gazellacom-rollback
+      gazellacom_mode: rollback
+      gazellacom_method: static                 # static, url, mixed
+      gazellacom_method_url: null               # aws, digitalocean
+      gazellacom_rollback_build_number: null         # value numeric
+      gazellacom_project: biofermpy # client
+      gazellacom_environment: integration #integration, production
+      gazellacom_remote_workdir: '/opt/deployment-awx'

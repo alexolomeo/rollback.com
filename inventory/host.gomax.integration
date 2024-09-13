@@ -1,0 +1,23 @@
+[gazellaerp]
+
+[gazellaerp:vars]
+ansible_user=ubuntu
+ansible_ssh_private_key_file= ~/.ssh/GOMAX-JENKINS-USER.pem
+ansible_become=yes
+ansible_python_interpreter=/usr/bin/python3
+
+[gazellacom]
+com ansible_host=18.211.47.190
+
+[gazellacom:vars]
+ansible_become=yes
+ansible_user=jenkins-user
+ansible_ssh_private_key_file= ~/.ssh/GOMAX-JENKINS-USER.pem
+
+[localserver]
+controller ansible_host=159.65.253.208
+
+[localserver:vars]
+ansible_user=root
+ansible_become=yes
+ansible_ssh_private_key_file= ~/.ssh/GOMAX-JENKINS-USER.pem

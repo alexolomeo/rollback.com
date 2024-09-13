@@ -1,0 +1,5 @@
+---
+
+- name: "Deploy new package on wildfly"
+  ansible.builtin.include_tasks: rollback.yml
+  when: gazellacom_mode == 'rollback'    

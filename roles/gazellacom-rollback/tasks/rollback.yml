@@ -1,0 +1,47 @@
+---
+#- name: "Ensure required parameters are provided."
+#  ansible.builtin.assert:
+#    that:
+#      - gazellacom_app_workdir is defined
+#      - gazellacom_path_to_folder_to_deploy is defined
+#      - app_name is defined
+#    quiet: true
+#- name: "Ensure requirements on target system are fullfilled."
+#  ansible.builtin.include_tasks: deploy/prereqs.yml
+  
+- name: "Get default rollback build "
+  become: yes
+  ansible.builtin.shell: ls /opt/deployment-awx/ | sort -k 5 | awk '{print $1}' | tail -2 | head -1 |  grep -oE '[0-9]+([.][0-9]+)?'
+  register: gazellacom_number_build_read
+
+- debug: msg="{{gazellacom_number_build_read.stdout}}"
+
+- name: "Rollback variable gazellacom_number_build_read = {{ gazellacom_number_build_read }}"
+  set_fact: gazellacom_number_build={{ gazellacom_number_build_read.stdout }}
+
+- name: "Deploy application as a systemd service on target system."
+  become: yes
+  ansible.builtin.shell: bash /opt/jboss/bin/jboss-cli.sh --connect --command="undeploy *.war" || true
+
+- name: "Stop service wildfly"
+  ansible.builtin.systemd_service:
+    state: stopped
+    name: wildfly
+
+- name: "Remove all deploy file from wildfly."
+  ansible.builtin.shell: rm -rf /opt/jboss/standalone/deployments/*
+
+- name: "Remove all termporal files from wildfly."
+  become: yes
+  ansible.builtin.shell: rm -rf /opt/jboss/standalone/tmp
+
+- name: "Deploy new package "
+  ansible.builtin.shell: "cp {{ gazellacom_remote_workdir }}//build_{{ gazellacom_number_build }}/*.war /opt/jboss/standalone/deployments"
+
+- name: "Start service wildfly"
+  ansible.builtin.systemd_service:
+    state: started
+    name: wildfly
+
+#- name: "Verify that deployment is functional."
+#  ansible.builtin.include_tasks: validate_deployment.yml

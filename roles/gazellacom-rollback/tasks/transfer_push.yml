@@ -1,0 +1,27 @@
+---
+- name: "push file to remote host {{ gazellacom_project }} {{ gazellacom_environment }}"
+  block:
+
+    - name: Copy the file from master to gazellacom
+      ansible.builtin.copy: 
+        src: "buffer/build_{{ gazellacom_number_build }}.tgz"
+        dest: "{{ gazellacom_remote_workdir }}/build_{{ gazellacom_number_build }}.tgz"
+          
+    - name: "Unarchive deploy: {{ gazellacom_remote_workdir }}"
+      ansible.builtin.unarchive:
+        src: "{{ gazellacom_remote_workdir }}/build_{{ gazellacom_number_build }}.tgz"
+        dest: "{{ gazellacom_remote_workdir }}"
+        remote_src: yes
+
+    - name: "Delete compress {{ gazellacom_remote_workdir }}/build_{{ gazellacom_number_build }}.tgz"
+      ansible.builtin.file:
+        path: "{{ gazellacom_remote_workdir }}/build_{{ gazellacom_number_build }}.tgz"
+        state: absent
+      ignore_errors: yes
+
+        #    - name: "Increment variable gazellacom_number_build = {{ gazellacom_number_build | int + 1 }}"
+        #      set_fact: gazellacom_number_build={{ gazellacom_number_build | int + 1 }}
+
+  when: inventory_hostname == 'com'
+
+
