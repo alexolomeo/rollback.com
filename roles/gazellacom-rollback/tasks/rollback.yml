@@ -36,7 +36,7 @@
   ansible.builtin.shell: rm -rf /opt/jboss/standalone/tmp
 
 - name: "Deploy new package "
-  ansible.builtin.shell: "cp {{ gazellacom_remote_workdir }}//build_{{ gazellacom_number_build }}/*.war /opt/jboss/standalone/deployments"
+  ansible.builtin.shell: "cp {{ gazellacom_remote_workdir }}//{{ gazellacom_project }}_{{ gazellacom_environment}}_build_{{ gazellacom_number_build }}/*.war /opt/jboss/standalone/deployments"
 
 - name: "Start service wildfly"
   ansible.builtin.systemd_service:
