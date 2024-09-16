@@ -29,8 +29,8 @@
 
     - debug: msg="{{gazellacom_number_build}}"
 
-    - name: "Rollback custom variable gazellacom_number_build = {{ gazellacom_number_build }}"
-      set_fact: gazellacom_number_build={{ gazellacom_number_build }}
+    - name: "Rollback custom variable gazellacom_number_build = {{ gazellacom_rollback_build_number }}"
+      set_fact: gazellacom_number_build={{ gazellacom_rollback_build_number }}
 
   when: gazellacom_rollback_build_number != null
 
