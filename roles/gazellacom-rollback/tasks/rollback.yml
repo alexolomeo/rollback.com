@@ -27,7 +27,7 @@
 - name: "Build app from custom rollback."
   block:
 
-    - debug: msg="{{gazellacom_number_build}}"
+    - debug: msg="{{gazellacom_rollback_build_number}}"
 
     - name: "Rollback custom variable gazellacom_number_build = {{ gazellacom_rollback_build_number }}"
       set_fact: gazellacom_number_build={{ gazellacom_rollback_build_number }}
