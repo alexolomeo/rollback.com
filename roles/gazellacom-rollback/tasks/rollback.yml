@@ -9,15 +9,30 @@
 #- name: "Ensure requirements on target system are fullfilled."
 #  ansible.builtin.include_tasks: deploy/prereqs.yml
   
-- name: "Get default rollback build "
-  become: yes
-  ansible.builtin.shell: ls /opt/deployment-awx/ | sort -k 5 | awk '{print $1}' | tail -2 | head -1 |  grep -oE '[0-9]+([.][0-9]+)?'
-  register: gazellacom_number_build_read
+- name: "Build app from rollback default."
+  block:
 
-- debug: msg="{{gazellacom_number_build_read.stdout}}"
+    - name: "Get default rollback build "
+      become: yes
+      ansible.builtin.shell: ls /opt/deployment-awx/ | sort -k 5 | awk '{print $1}' | tail -2 | head -1 |  grep -oE '[0-9]+([.][0-9]+)?'
+      register: gazellacom_number_build_read
 
-- name: "Rollback variable gazellacom_number_build_read = {{ gazellacom_number_build_read }}"
-  set_fact: gazellacom_number_build={{ gazellacom_number_build_read.stdout }}
+    - debug: msg="{{gazellacom_number_build_read.stdout}}"
+
+    - name: "Rollback variable gazellacom_number_build_read = {{ gazellacom_number_build_read }}"
+      set_fact: gazellacom_number_build={{ gazellacom_number_build_read.stdout }}
+
+  when: gazellacom_number_build == null
+
+- name: "Build app from custom rollback."
+  block:
+
+    - debug: msg="{{gazellacom_number_build}}"
+
+    - name: "Rollback custom variable gazellacom_number_build = {{ gazellacom_number_build }}"
+      set_fact: gazellacom_number_build={{ gazellacom_number_build }}
+
+  when: gazellacom_number_build == null
 
 - name: "Deploy application as a systemd service on target system."
   become: yes
