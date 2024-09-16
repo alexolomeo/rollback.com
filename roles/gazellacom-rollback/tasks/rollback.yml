@@ -22,7 +22,7 @@
     - name: "Rollback variable gazellacom_number_build_read = {{ gazellacom_number_build_read }}"
       set_fact: gazellacom_number_build={{ gazellacom_number_build_read.stdout }}
 
-  when: gazellacom_rollback_build_number == null
+  when: gazellacom_rollback_build_number == 'default'
 
 - name: "Build app from custom rollback."
   block:
@@ -32,7 +32,7 @@
     - name: "Rollback custom variable gazellacom_number_build = {{ gazellacom_rollback_build_number }}"
       set_fact: gazellacom_number_build={{ gazellacom_rollback_build_number }}
 
-  when: gazellacom_rollback_build_number != null
+  when: gazellacom_rollback_build_number != 'default'
 
 - name: "Deploy application as a systemd service on target system."
   become: yes
