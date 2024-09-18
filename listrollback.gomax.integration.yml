@@ -3,7 +3,7 @@
 - name: gomax integration rollback
   hosts: gazellacom
   become: true
-    vars_prompt:
+  vars_prompt:
 
     - name: username
       prompt: "What is your username?"
