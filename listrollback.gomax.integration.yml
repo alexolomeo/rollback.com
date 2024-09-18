@@ -3,6 +3,15 @@
 - name: gomax integration rollback
   hosts: gazellacom
   become: true
+    vars_prompt:
+
+    - name: username
+      prompt: "What is your username?"
+      private: no
+
+    - name: password
+      prompt: "What is your password?"
+
   roles:
     - role: gazellacom-rollback
       gazellacom_mode: listbuild                 # rollback, listbuild, listbuildurl, mixed
