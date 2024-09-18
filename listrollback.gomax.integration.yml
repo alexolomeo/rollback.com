@@ -7,7 +7,7 @@
 #     gazellacom_number_build: "{{ lookup('file', gazellacom_build_sequence_file) }}"
   roles:
     - role: gazellacom-rollback
-      gazellacom_mode: rollback                 # rollback, listbuild, listbuildurl, mixed
+      gazellacom_mode: listbuild                 # rollback, listbuild, listbuildurl, mixed
       gazellacom_method: static                 # static, url, mixed
       gazellacom_method_url: null               # aws, digitalocean
       gazellacom_rollback_build_number: "default"         # value numeric
