@@ -11,4 +11,4 @@
     - name: Print return information from the previous task
       ansible.builtin.debug:
         var: gazellacom_list_build_read.stdout_lines
-        verbosity: 2
+        verbosity: 4
