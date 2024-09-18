@@ -8,15 +8,7 @@
       ansible.builtin.shell: "ls {{ gazellacom_remote_workdir }} | sort -k {{ gacellacom_limit }} "
       register: gazellacom_list_build_read
 
-    - debug: msg="{{gazellacom_list_build_read.stdout}}"
-
     - name: Print return information from the previous task
       ansible.builtin.debug:
         var: gazellacom_list_build_read.stdout_lines
         verbosity: 2
-
-
-    - name: "Rollback variable gazellacom_list_build_read "
-      set_fact: gazellacom_list_build={{ gazellacom_list_build_read.stdout }}
-
-
