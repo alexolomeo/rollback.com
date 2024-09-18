@@ -5,7 +5,7 @@
 
     - name: "List to  rollback build "
       become: yes
-      ansible.builtin.shell: "ls [[ gazellacom_remote_workdir }} | sort -k {{ gacellacom_limit }} "
+      ansible.builtin.shell: "ls {{ gazellacom_remote_workdir }} | sort -k {{ gacellacom_limit }} "
       register: gazellacom_list_build_read
 
     - debug: msg="{{gazellacom_list_build_read.stdout}}"
