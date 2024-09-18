@@ -3,8 +3,6 @@
 - name: gomax integration rollback
   hosts: gazellacom
   become: true
-#  vars:
-#     gazellacom_number_build: "{{ lookup('file', gazellacom_build_sequence_file) }}"
   roles:
     - role: gazellacom-rollback
       gazellacom_mode: rollback                 # rollback, listbuild, listbuildurl, mixed
