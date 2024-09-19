@@ -5,12 +5,9 @@
   become: true
   vars_prompt:
 
-    - name: username
-      prompt: "What is your username?"
+    - name: gacellacom_limit
+      prompt: "Limit build"
       private: no
-
-    - name: password
-      prompt: "What is your password?"
 
   roles:
     - role: gazellacom-rollback
