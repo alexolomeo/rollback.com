@@ -3,12 +3,6 @@
 - name: gomax integration rollback
   hosts: gazellacom
   become: true
-  vars_prompt:
-
-    - name: gacellacom_limit
-      prompt: "Limit build"
-      private: no
-
   roles:
     - role: gazellacom-rollback
       gazellacom_mode: listbuild                 # rollback, listbuild, listbuildurl, mixed
