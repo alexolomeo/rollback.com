@@ -8,7 +8,7 @@
       gazellacom_mode: rollback                 # rollback, listbuild, listbuildurl, mixed
       gazellacom_method: static                 # static, url, mixed
       gazellacom_method_url: null               # aws, digitalocean
-      gazellacom_rollback_build_number: "default"         # value numeric
+      gazellacom_rollback_build_number: 0       # value numeric , 0 is a default
       gazellacom_project: gomax # client
       gazellacom_environment: integration #integration, production
       gazellacom_remote_workdir: '/opt/deployment-awx'
